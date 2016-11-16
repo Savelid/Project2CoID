@@ -17,12 +17,18 @@ namespace Projekt2CavernsOfImpendingDoom
 
         public void AddPlayer(Player player)
         {
-            Characters.Add(player);
+            lock (Characters)
+            {
+                Characters.Add(player);
+            }
         }
 
         public void RemovePlayer(Player player)
         {
-            Characters.Remove(player);
+            lock (Characters)
+            { 
+                Characters.Remove(player);
+            }
         }
     }
 }

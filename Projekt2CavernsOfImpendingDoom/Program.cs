@@ -204,7 +204,7 @@ namespace Projekt2CavernsOfImpendingDoom
                 Player newPlayer = new Player(ap.UserName);
                 newPlayer.Location = new Location(1, 1);
                 game.Players.Add(newPlayer);
-                game.GameBoard.AddPlayer(newPlayer);
+                game.GameBoard.AddPlayerToRoom(newPlayer);
                 return newPlayer;
             }
         }

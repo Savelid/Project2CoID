@@ -30,14 +30,21 @@ namespace Projekt2CavernsOfImpendingDoom
             }
         }
 
-        public void RemovePlayer(Player player)
+        public void RemovePlayerFromRoom(Player player)
         {
-            rooms[player.Location.X, player.Location.Y].RemovePlayer(player);
+            lock (rooms)
+            {
+                rooms[player.Location.X, player.Location.Y].RemovePlayer(player);
+            }
         }
 
-        public void AddPlayer(Player player)
+        public void AddPlayerToRoom(Player player)
         {
-            rooms[player.Location.X, player.Location.Y].AddPlayer(player);
+            lock (rooms)
+            {
+                rooms[player.Location.X, player.Location.Y].AddPlayer(player);
+            }
+
         }
 
         public string GetGameBoardString()

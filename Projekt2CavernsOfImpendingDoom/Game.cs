@@ -23,7 +23,7 @@ namespace Projekt2CavernsOfImpendingDoom
 
         public void HandlePlayerMovement(string message, Player player)
         {
-            GameBoard.RemovePlayer(player);
+            GameBoard.RemovePlayerFromRoom(player);
             switch (message)
             {                    
                 case "LeftArrow":
@@ -41,9 +41,10 @@ namespace Projekt2CavernsOfImpendingDoom
                         player.Location.Y++;
                     break;
                 default:
+                    Console.WriteLine("Key not allowed!");
                     break;
             }
-            GameBoard.AddPlayer(player);
+            GameBoard.AddPlayerToRoom(player);
         }
 
     }
