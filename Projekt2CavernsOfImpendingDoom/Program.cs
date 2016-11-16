@@ -175,7 +175,7 @@ namespace Projekt2CavernsOfImpendingDoom
                         message = new BinaryReader(n).ReadString();
                         var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
 
-                        //Console.WriteLine(ap.Action, ap.UserName);
+                        Console.WriteLine(ap.Action, ap.UserName);
 
                         if (newPlayer == null)
                         {

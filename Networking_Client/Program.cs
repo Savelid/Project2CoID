@@ -14,6 +14,8 @@ namespace Networking_Client
 {
     class Program
     {
+        static string name;
+
         static void Main(string[] args)
         {
             Client myClient = new Client();
@@ -34,6 +36,8 @@ namespace Networking_Client
                 IPHostEntry host;
                 string localIP = "127.0.0.1";
 
+                Console.WriteLine("Ange Namn");
+                name = Console.ReadLine();
 
                 //localIP = Console.ReadLine();
                 #endregion
@@ -73,9 +77,6 @@ namespace Networking_Client
 
             public void Send()
             {
-                string name;
-                Console.WriteLine("Ange Namn");
-                name = Console.ReadLine();
                 ConsoleKeyInfo message = new ConsoleKeyInfo();
 
                 try
