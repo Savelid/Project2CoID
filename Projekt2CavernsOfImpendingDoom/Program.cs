@@ -138,15 +138,35 @@ namespace Projekt2CavernsOfImpendingDoom
             {
                 tcpclient = c;
                 myServer = server;
-                var newPlayer = new Player("Kalle Kungen XVI");
-                newPlayer.Location = new Location(1, 1);
-                game.Players.Add(newPlayer);
-                game.GameBoard.AddPlayer(newPlayer);
-
             }
 
             public void Run()
             {
+                //skapa funktionalitet för att fråga efter namn
+
+                var name = "";
+
+                try
+                {
+                    
+                    while (name == "")
+                    {
+                        NetworkStream n = tcpclient.GetStream();
+                        name = new BinaryReader(n).ReadString();
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                var newPlayer = new Player(name);
+                Console.WriteLine("Name:" + name);
+                newPlayer.Location = new Location(1, 1);
+                game.Players.Add(newPlayer);
+                game.GameBoard.AddPlayer(newPlayer);
+
                 try
                 {
                     string gameBoardString = "";
