@@ -175,6 +175,8 @@ namespace Projekt2CavernsOfImpendingDoom
                         message = new BinaryReader(n).ReadString();
                         var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
 
+                        //Console.WriteLine(ap.Action, ap.UserName);
+
                         if (newPlayer == null)
                         {
                             newPlayer = CreateNewPlayer(ap);
@@ -185,7 +187,7 @@ namespace Projekt2CavernsOfImpendingDoom
                         gameBoardString = game.GameBoard.GetGameBoardString();
                         myServer.Broadcast(this, gameBoardString);
 
-                        Console.WriteLine(message);
+                        Console.WriteLine(ap.Action);
                     }
 
                     myServer.DisconnectClient(this);

@@ -88,7 +88,7 @@ namespace Networking_Client
                         BinaryWriter w = new BinaryWriter(n);
                         ActionProtocol ap = new ActionProtocol(name, message.Key.ToString());
                         string json = JsonConvert.SerializeObject(ap);
-                        w.Write(message.Key.ToString());
+                        w.Write(json);
                         w.Flush();
                     }
 
