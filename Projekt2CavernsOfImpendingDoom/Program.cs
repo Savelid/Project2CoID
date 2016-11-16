@@ -142,27 +142,22 @@ namespace Projekt2CavernsOfImpendingDoom
 
             public void Run()
             {
-                //skapa funktionalitet för att fråga efter namn
+                //var name = "";
+                //try
+                //{
+                //    while (name == "")
+                //    {
+                //        NetworkStream n = tcpclient.GetStream();
+                //        name = new BinaryReader(n).ReadString();
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine(ex.Message);
+                //}
 
-                var name = "";
-
-                try
-                {
-                    
-                    while (name == "")
-                    {
-                        NetworkStream n = tcpclient.GetStream();
-                        name = new BinaryReader(n).ReadString();
-                    }
-                    
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-
-                var newPlayer = new Player(name);
-                Console.WriteLine("Name:" + name);
+                var newPlayer = new Player("Name");
+                //Console.WriteLine("Name:" + name);
                 newPlayer.Location = new Location(1, 1);
                 game.Players.Add(newPlayer);
                 game.GameBoard.AddPlayer(newPlayer);
