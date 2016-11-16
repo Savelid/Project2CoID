@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NetworkingUtils;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,5 +49,15 @@ namespace Projekt2CavernsOfImpendingDoom
             GameBoard.AddPlayerToRoom(player);
         }
 
+        internal string GetProtocol(string message, Player player)
+        {
+            GameBoardProtocol gp = new GameBoardProtocol(message);
+            if (GameBoard.rooms[player.Location.X, player.Location.Y].Characters.Count > 1)
+            {
+                gp.Interactions.Add("HejHej");
+            }
+            string toSend = JsonConvert.SerializeObject(gp);
+            return toSend;
+        }
     }
 }

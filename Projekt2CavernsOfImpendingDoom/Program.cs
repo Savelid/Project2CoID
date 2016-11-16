@@ -66,14 +66,20 @@ namespace Projekt2CavernsOfImpendingDoom
                 }
             }
 
-            public void Broadcast(ClientHandler client, string message)
+            public void Broadcast(ClientHandler client, string jsonToSend)
             {
+
+
                 foreach (ClientHandler tmpClient in clients)
                 {
-                        NetworkStream n = tmpClient.tcpclient.GetStream();
-                        BinaryWriter w = new BinaryWriter(n);
-                        w.Write(message);
-                        w.Flush();
+                    //if (tmpClient == client) { 
+                    //    message += "\nadded interactions";
+                    //}
+
+                    NetworkStream n = tmpClient.tcpclient.GetStream();
+                    BinaryWriter w = new BinaryWriter(n);
+                    w.Write(jsonToSend);
+                    w.Flush();
                 }
             }
 
@@ -182,10 +188,12 @@ namespace Projekt2CavernsOfImpendingDoom
                             newPlayer = CreateNewPlayer(ap);
                         }
 
+                        //fixa interactions
                         game.HandlePlayerMovement(ap.Action, newPlayer);
-
                         gameBoardString = game.GameBoard.GetGameBoardString();
-                        myServer.Broadcast(this, gameBoardString);
+                        string jsonToSend = game.GetProtocol(gameBoardString);
+
+                        myServer.Broadcast(this, jsonToSend);
 
                         Console.WriteLine(ap.Action);
                     }
