@@ -14,10 +14,10 @@ namespace Projekt2CavernsOfImpendingDoom
         {
             Players = new List<Player>();
             GameBoard = new GameBoard(width, length);
-            var player = new Player("Pär");
-            player.Location = new Location(2, 2);
-            Players.Add(player);
-            GameBoard.AddPlayer(player);
+            //var player = new Player("Pär");
+            //player.Location = new Location(2, 2);
+            //Players.Add(player);
+            //GameBoard.AddPlayer(player);
         
         }
 

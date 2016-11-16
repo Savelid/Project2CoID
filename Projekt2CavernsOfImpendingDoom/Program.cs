@@ -138,11 +138,11 @@ namespace Projekt2CavernsOfImpendingDoom
             {
                 tcpclient = c;
                 myServer = server;
-                //var newPlayer = new Player("Kalle Kungen XVI");
-                //newPlayer.Location = new Location(1, 1);
-                //game.Players.Add(newPlayer);
-                //game.GameBoard.AddPlayer(newPlayer);
-                
+                var newPlayer = new Player("Kalle Kungen XVI");
+                newPlayer.Location = new Location(1, 1);
+                game.Players.Add(newPlayer);
+                game.GameBoard.AddPlayer(newPlayer);
+
             }
 
             public void Run()
