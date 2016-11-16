@@ -7,8 +7,10 @@ namespace Projekt2CavernsOfImpendingDoom
 {
     public class Location
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        private int x;
+        private int y;
+        public int X { get { return x; } set { x = (value >= 0) ? value : 0; } }
+        public int Y { get { return y; } set { y = (value >= 0) ? value : 0; } }
 
         public Location(int x, int y)
         {

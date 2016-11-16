@@ -52,10 +52,15 @@ namespace Projekt2CavernsOfImpendingDoom
                     {
                         roomString += "[ ]";
                     }
+                    else if (rooms[x, y].Characters.Count == 1)
+                    {
+                        roomString += $"[{rooms[x,y].Characters[0].Name[0]}]";
+                    }
                     else
                     {
-                        roomString += "[P]";
+                        roomString += "[*]";
                     }
+
                 }
                 roomString += Environment.NewLine;
 

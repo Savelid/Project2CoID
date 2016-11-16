@@ -30,13 +30,15 @@ namespace Projekt2CavernsOfImpendingDoom
                     player.Location.X--;
                     break;
                 case "RightArrow":
-                    player.Location.X++;
+                    if (player.Location.X < GameBoard.Width -1)
+                        player.Location.X++;
                     break;
                 case "UpArrow":
                     player.Location.Y--;
                     break;
                 case "DownArrow":
-                    player.Location.Y++;
+                    if (player.Location.Y < GameBoard.Height - 1)
+                        player.Location.Y++;
                     break;
                 default:
                     break;

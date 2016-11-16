@@ -17,7 +17,7 @@ namespace Projekt2CavernsOfImpendingDoom
         public static TcpListener listener;
         static void Main(string[] args)
         {
-            game = new Game(5,3);
+            game = new Game(10,10);
 
             Server myServer = new Server();
             serverThread = new Thread(myServer.Run);
@@ -142,22 +142,22 @@ namespace Projekt2CavernsOfImpendingDoom
 
             public void Run()
             {
-                //var name = "";
-                //try
-                //{
-                //    while (name == "")
-                //    {
-                //        NetworkStream n = tcpclient.GetStream();
-                //        name = new BinaryReader(n).ReadString();
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    Console.WriteLine(ex.Message);
-                //}
+                var name = "";
+                try
+                {
+                    while (name == "")
+                    {
+                        NetworkStream n = tcpclient.GetStream();
+                        name = new BinaryReader(n).ReadString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
-                var newPlayer = new Player("Name");
-                //Console.WriteLine("Name:" + name);
+                var newPlayer = new Player(name);
+                Console.WriteLine("Name:" + name);
                 newPlayer.Location = new Location(1, 1);
                 game.Players.Add(newPlayer);
                 game.GameBoard.AddPlayer(newPlayer);
