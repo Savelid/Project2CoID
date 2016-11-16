@@ -12,14 +12,12 @@ namespace Projekt2CavernsOfImpendingDoom
 {
     class Program
     {
-        static List<Player> players;
-        static GameBoard gameBoard;
+        static Game game;
         public static Thread serverThread;
         public static TcpListener listener;
         static void Main(string[] args)
         {
-            players = new List<Player>();
-            gameBoard = new GameBoard(5,3);
+            game = new Game(5,3);
 
             Server myServer = new Server();
             serverThread = new Thread(myServer.Run);
@@ -140,19 +138,29 @@ namespace Projekt2CavernsOfImpendingDoom
             {
                 tcpclient = c;
                 myServer = server;
+                //var newPlayer = new Player("Kalle Kungen XVI");
+                //newPlayer.Location = new Location(1, 1);
+                //game.Players.Add(newPlayer);
+                //game.GameBoard.AddPlayer(newPlayer);
+                
             }
 
             public void Run()
             {
                 try
                 {
+                    string gameBoardString = "";
                     string message = "";
                     while (!message.Equals("quit"))
                     {
                         NetworkStream n = tcpclient.GetStream();
                         message = new BinaryReader(n).ReadString();
-                        message = gameBoard.GetGameBoardString();
-                        myServer.Broadcast(this, message);
+
+                        game.HandlePlayerMovement(message);
+
+                        gameBoardString = game.GameBoard.GetGameBoardString();
+                        myServer.Broadcast(this, gameBoardString);
+
                         Console.WriteLine(message);
                     }
 

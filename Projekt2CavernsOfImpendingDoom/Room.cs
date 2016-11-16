@@ -14,5 +14,15 @@ namespace Projekt2CavernsOfImpendingDoom
             Location = location;
             Characters = new List<Character>();
         }
+
+        public void AddPlayer(Player player)
+        {
+            Characters.Add(player);
+        }
+
+        public void RemovePlayer(Player player)
+        {
+            Characters.Remove(player);
+        }
     }
 }

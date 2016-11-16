@@ -10,5 +10,9 @@ namespace Projekt2CavernsOfImpendingDoom
         public Location Location { get; set; }
         public int Health { get; set; }
         public int Strength { get; set; }
+        public Character(string name)
+        {
+            Name = name;
+        }
     }
 }

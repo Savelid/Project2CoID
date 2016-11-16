@@ -29,10 +29,10 @@ namespace Networking_Client
             {
                 #region Get local IP
                 IPHostEntry host;
-                string localIP = "?";
+                string localIP = "127.0.0.1";
 
                 Console.WriteLine("Ange IP");
-                localIP = Console.ReadLine();
+                //localIP = Console.ReadLine();
                 #endregion
 
                 //client = new TcpClient("192.168.220.116", 8080);
