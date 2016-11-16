@@ -21,27 +21,27 @@ namespace Projekt2CavernsOfImpendingDoom
         
         }
 
-        public void HandlePlayerMovement(string message)
+        public void HandlePlayerMovement(string message, Player player)
         {
-            GameBoard.RemovePlayer(Players[0]);
+            GameBoard.RemovePlayer(player);
             switch (message)
             {                    
                 case "LeftArrow":
-                    Players[0].Location.X--;
+                    player.Location.X--;
                     break;
                 case "RightArrow":
-                    Players[0].Location.X++;
+                    player.Location.X++;
                     break;
                 case "UpArrow":
-                    Players[0].Location.Y--;
+                    player.Location.Y--;
                     break;
                 case "DownArrow":
-                    Players[0].Location.Y++;
+                    player.Location.Y++;
                     break;
                 default:
                     break;
             }
-            GameBoard.AddPlayer(Players[0]);
+            GameBoard.AddPlayer(player);
         }
 
     }

@@ -176,7 +176,7 @@ namespace Projekt2CavernsOfImpendingDoom
                         NetworkStream n = tcpclient.GetStream();
                         message = new BinaryReader(n).ReadString();
 
-                        game.HandlePlayerMovement(message);
+                        game.HandlePlayerMovement(message, newPlayer);
 
                         gameBoardString = game.GameBoard.GetGameBoardString();
                         myServer.Broadcast(this, gameBoardString);
