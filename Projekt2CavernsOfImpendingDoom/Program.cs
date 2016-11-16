@@ -7,6 +7,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using NetworkingUtils;
 
 namespace Projekt2CavernsOfImpendingDoom
 {
@@ -142,36 +144,43 @@ namespace Projekt2CavernsOfImpendingDoom
 
             public void Run()
             {
-                var name = "";
+                //var name = "";
+                //try
+                //{
+                //    while (name == "")
+                //    {
+                //        NetworkStream n = tcpclient.GetStream();
+                //        name = new BinaryReader(n).ReadString();
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine(ex.Message);
+                //}
+
+                //var newPlayer = new Player(name);
+                //Console.WriteLine("Name:" + name);
+                //newPlayer.Location = new Location(1, 1);
+                //game.Players.Add(newPlayer);
+                //game.GameBoard.AddPlayer(newPlayer);
+
                 try
                 {
-                    while (name == "")
-                    {
-                        NetworkStream n = tcpclient.GetStream();
-                        name = new BinaryReader(n).ReadString();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-
-                var newPlayer = new Player(name);
-                Console.WriteLine("Name:" + name);
-                newPlayer.Location = new Location(1, 1);
-                game.Players.Add(newPlayer);
-                game.GameBoard.AddPlayer(newPlayer);
-
-                try
-                {
+                    Player newPlayer = null;
                     string gameBoardString = "";
                     string message = "";
                     while (!message.Equals("quit"))
                     {
                         NetworkStream n = tcpclient.GetStream();
                         message = new BinaryReader(n).ReadString();
+                        var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
 
-                        game.HandlePlayerMovement(message, newPlayer);
+                        if (newPlayer == null)
+                        {
+                            newPlayer = CreateNewPlayer(ap);
+                        }
+
+                        game.HandlePlayerMovement(ap.Action, newPlayer);
 
                         gameBoardString = game.GameBoard.GetGameBoardString();
                         myServer.Broadcast(this, gameBoardString);
@@ -186,6 +195,15 @@ namespace Projekt2CavernsOfImpendingDoom
                 {
                     Console.WriteLine(ex.Message);
                 }
+            }
+
+            private static Player CreateNewPlayer(ActionProtocol ap)
+            {
+                Player newPlayer = new Player(ap.UserName);
+                newPlayer.Location = new Location(1, 1);
+                game.Players.Add(newPlayer);
+                game.GameBoard.AddPlayer(newPlayer);
+                return newPlayer;
             }
         }
     }

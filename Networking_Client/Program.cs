@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NetworkingUtils;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,11 +29,12 @@ namespace Networking_Client
 
             public void Start()
             {
+                
                 #region Get local IP
                 IPHostEntry host;
                 string localIP = "127.0.0.1";
 
-                Console.WriteLine("Ange IP");
+
                 //localIP = Console.ReadLine();
                 #endregion
 
@@ -70,6 +73,9 @@ namespace Networking_Client
 
             public void Send()
             {
+                string name;
+                Console.WriteLine("Ange Namn");
+                name = Console.ReadLine();
                 ConsoleKeyInfo message = new ConsoleKeyInfo();
 
                 try
@@ -80,6 +86,8 @@ namespace Networking_Client
                     {
                         message = Console.ReadKey();
                         BinaryWriter w = new BinaryWriter(n);
+                        ActionProtocol ap = new ActionProtocol(name, message.Key.ToString());
+                        string json = JsonConvert.SerializeObject(ap);
                         w.Write(message.Key.ToString());
                         w.Flush();
                     }
