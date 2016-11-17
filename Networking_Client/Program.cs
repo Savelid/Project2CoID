@@ -39,7 +39,7 @@ namespace Networking_Client
                 Console.WriteLine("Ange Namn");
                 name = Console.ReadLine();
 
-                localIP = Console.ReadLine();
+                //localIP = Console.ReadLine();
                 #endregion
 
                 //client = new TcpClient("192.168.220.116", 8080);
@@ -65,16 +65,13 @@ namespace Networking_Client
                     {
                         NetworkStream n = client.GetStream();
                         message = new BinaryReader(n).ReadString();
-
                         var toWrite = JsonConvert.DeserializeObject<GameBoardProtocol>(message);
-
                         Console.Clear();
                         Console.WriteLine(toWrite.Gameboard);
                         foreach (var interaction in toWrite.Interactions)
                         {
                             Console.WriteLine(interaction);
                         }
-
                         foreach (var stat in toWrite.Stats)
                         {
                             Console.WriteLine(stat);

@@ -184,6 +184,7 @@ namespace Projekt2CavernsOfImpendingDoom
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine("inne i server catch");
                     Console.WriteLine(ex.Message);
                 }
                 finally

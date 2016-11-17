@@ -55,7 +55,7 @@ namespace Projekt2CavernsOfImpendingDoom
                     {
                         HitPlayers(player);
                     }
-                    
+
 
                     break;
                 default:
