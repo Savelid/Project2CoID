@@ -181,6 +181,7 @@ namespace Projekt2CavernsOfImpendingDoom
                         }
                     }
 
+                    game.GameBoard.RemovePlayerFromRoom(thisPlayer);
                     game.Players.Remove(thisPlayer);
                     myServer.DisconnectClient(this);
                     tcpclient.Close();

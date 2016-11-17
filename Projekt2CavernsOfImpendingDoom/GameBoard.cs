@@ -61,10 +61,14 @@ namespace Projekt2CavernsOfImpendingDoom
                     }
                     else if (rooms[x, y].Characters.Count == 1)
                     {
+                        Console.WriteLine("how many characters in room: " + rooms[x, y].Characters.Count);
+
                         roomString += $"[{rooms[x,y].Characters[0].Name[0]}]";
                     }
                     else
                     {
+
+                        Console.WriteLine("how many characters in room: " + rooms[x, y].Characters.Count);
                         roomString += "[*]";
                     }
 
