@@ -39,7 +39,7 @@ namespace Networking_Client
                 Console.WriteLine("Ange Namn");
                 name = Console.ReadLine();
 
-                //localIP = Console.ReadLine();
+                localIP = Console.ReadLine();
                 #endregion
 
                 //client = new TcpClient("192.168.220.116", 8080);
@@ -74,7 +74,12 @@ namespace Networking_Client
                         {
                             Console.WriteLine(interaction);
                         }
-                        
+
+                        foreach (var stat in toWrite.Stats)
+                        {
+                            Console.WriteLine(stat);
+                        }
+
                     }
                 }
                 catch (Exception ex)

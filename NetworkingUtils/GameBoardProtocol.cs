@@ -14,6 +14,7 @@ namespace NetworkingUtils
         public string Gameboard { get; set; }
         public string Version { get; set; }
         public List<string> Interactions { get; set; }
+        public List<string> Stats { get; set; }
 
 
         public GameBoardProtocol(string gameboard)
@@ -23,6 +24,7 @@ namespace NetworkingUtils
             totalId++;
             Id = totalId;
             Version = "1.0.0";
+            Stats = new List<string>();
         }
 
     }

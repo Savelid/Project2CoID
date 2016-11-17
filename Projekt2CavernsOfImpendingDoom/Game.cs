@@ -27,12 +27,6 @@ namespace Projekt2CavernsOfImpendingDoom
         {
             string board = GameBoard.GetGameBoardString();
 
-            foreach (Player player in Players)
-            {
-                board += player.Name + Environment.NewLine + "Health: " + player.Health + Environment.NewLine;
-                board += "Strength: " + player.Strength + Environment.NewLine;
-                board += "--------------------" + Environment.NewLine;
-            }
 
             return board;
         }
@@ -79,12 +73,16 @@ namespace Projekt2CavernsOfImpendingDoom
             }
         }
 
-        internal string GetProtocol(string message, Player player)
+        internal string GetProtocol()
         {
-            GameBoardProtocol gp = new GameBoardProtocol(message);
-            if (CheckRoomForOthers(player))
+            GameBoardProtocol gp = new GameBoardProtocol(GameBoard.GetGameBoardString());
+            foreach (Player otherplayer in Players)
             {
-                gp.Interactions.Add("HejHej");
+                string stats = otherplayer.Name + Environment.NewLine + "Health: " + otherplayer.Health + Environment.NewLine;
+                stats += "Strength: " + otherplayer.Strength + Environment.NewLine;
+
+                gp.Stats.Add(stats);
+
             }
             string toSend = JsonConvert.SerializeObject(gp);
             return toSend;
