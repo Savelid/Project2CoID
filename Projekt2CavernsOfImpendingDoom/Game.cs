@@ -23,6 +23,19 @@ namespace Projekt2CavernsOfImpendingDoom
         
         }
 
+        public string GetGameBoard()
+        {
+            string board = GameBoard.GetGameBoardString();
+
+            foreach (Player player in Players)
+            {
+                board += player.Name + Environment.NewLine + "Health: " + player.Health + Environment.NewLine;
+                board += "Strength: " + player.Strength + Environment.NewLine;
+                board += "--------------------" + Environment.NewLine;
+            }
+
+            return board;
+        }
         public void HandlePlayerMovement(string message, Player player)
         {
             GameBoard.RemovePlayerFromRoom(player);
@@ -42,6 +55,15 @@ namespace Projekt2CavernsOfImpendingDoom
                     if (player.Location.Y < GameBoard.Height - 1)
                         player.Location.Y++;
                     break;
+                case "Spacebar":
+                    //slå på en spelare
+                    if (CheckRoomForOthers(player))
+                    {
+                        HitPlayers(player);
+                    }
+                    
+
+                    break;
                 default:
                     Console.WriteLine("Key not allowed!");
                     break;
@@ -49,15 +71,32 @@ namespace Projekt2CavernsOfImpendingDoom
             GameBoard.AddPlayerToRoom(player);
         }
 
+        private void HitPlayers(Player player)
+        {
+            foreach (Character character in GameBoard.GetRoomCharacters(player) )
+            {
+                character.Health -= player.Strength;
+            }
+        }
+
         internal string GetProtocol(string message, Player player)
         {
             GameBoardProtocol gp = new GameBoardProtocol(message);
-            if (GameBoard.rooms[player.Location.X, player.Location.Y].Characters.Count > 1)
+            if (CheckRoomForOthers(player))
             {
                 gp.Interactions.Add("HejHej");
             }
             string toSend = JsonConvert.SerializeObject(gp);
             return toSend;
+        }
+
+        internal bool CheckRoomForOthers(Player player)
+        {
+            bool othersInRoom = false;
+            if (GameBoard.GetRoomCharacters(player).Count > 1)
+                othersInRoom = true;
+
+            return othersInRoom;
         }
     }
 }

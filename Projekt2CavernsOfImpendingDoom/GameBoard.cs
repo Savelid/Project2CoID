@@ -17,6 +17,10 @@ namespace Projekt2CavernsOfImpendingDoom
             Height = ySize;
             CreateRooms();
         }
+        public List<Character> GetRoomCharacters(Player player)
+        {
+            return rooms[player.Location.X, player.Location.Y].Characters;
+        }
 
         private void CreateRooms()
         {

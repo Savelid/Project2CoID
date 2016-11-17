@@ -149,9 +149,11 @@ namespace Projekt2CavernsOfImpendingDoom
 
             public void Run()
             {
+                Player thisPlayer = null;
+
                 try
                 {
-                    Player thisPlayer = null;
+                    
                     string gameBoardString = "";
                     string message = "";
                     while (tcpclient.Connected)
@@ -172,7 +174,7 @@ namespace Projekt2CavernsOfImpendingDoom
 
                             //fixa interactions
                             game.HandlePlayerMovement(ap.Action, thisPlayer);
-                            gameBoardString = game.GameBoard.GetGameBoardString();
+                            gameBoardString = game.GetGameBoard();
                             string jsonToSend = game.GetProtocol(gameBoardString, thisPlayer);
 
                             myServer.Broadcast(this, jsonToSend);
@@ -180,15 +182,17 @@ namespace Projekt2CavernsOfImpendingDoom
                             Console.WriteLine(ap.Action);
                         }
                     }
-
-                    game.GameBoard.RemovePlayerFromRoom(thisPlayer);
-                    game.Players.Remove(thisPlayer);
-                    myServer.DisconnectClient(this);
-                    tcpclient.Close();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    game.GameBoard.RemovePlayerFromRoom(thisPlayer);
+                    game.Players.Remove(thisPlayer);
+                    myServer.DisconnectClient(this);
+                    tcpclient.Close();
                 }
             }
 

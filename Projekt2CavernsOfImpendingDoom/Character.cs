@@ -13,6 +13,8 @@ namespace Projekt2CavernsOfImpendingDoom
         public Character(string name)
         {
             Name = name;
+            Health = 100;
+            Strength = 10;
         }
     }
 }
