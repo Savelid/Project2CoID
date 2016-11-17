@@ -191,7 +191,7 @@ namespace Projekt2CavernsOfImpendingDoom
                         //fixa interactions
                         game.HandlePlayerMovement(ap.Action, newPlayer);
                         gameBoardString = game.GameBoard.GetGameBoardString();
-                        string jsonToSend = game.GetProtocol(gameBoardString);
+                        string jsonToSend = game.GetProtocol(gameBoardString, newPlayer);
 
                         myServer.Broadcast(this, jsonToSend);
 
