@@ -69,17 +69,16 @@ namespace Projekt2CavernsOfImpendingDoom
             public void Broadcast(ClientHandler client, string jsonToSend)
             {
 
-
                 foreach (ClientHandler tmpClient in clients)
                 {
-                    //if (tmpClient == client) { 
-                    //    message += "\nadded interactions";
-                    //}
-
-                    NetworkStream n = tmpClient.tcpclient.GetStream();
-                    BinaryWriter w = new BinaryWriter(n);
-                    w.Write(jsonToSend);
-                    w.Flush();
+                    if (tmpClient.tcpclient.Connected)
+                    {
+                        NetworkStream n = tmpClient.tcpclient.GetStream();
+                        BinaryWriter w = new BinaryWriter(n);
+                        w.Write(jsonToSend);
+                        w.Flush();
+                    }
+                    
                 }
             }
 
@@ -150,54 +149,39 @@ namespace Projekt2CavernsOfImpendingDoom
 
             public void Run()
             {
-                //var name = "";
-                //try
-                //{
-                //    while (name == "")
-                //    {
-                //        NetworkStream n = tcpclient.GetStream();
-                //        name = new BinaryReader(n).ReadString();
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    Console.WriteLine(ex.Message);
-                //}
-
-                //var newPlayer = new Player(name);
-                //Console.WriteLine("Name:" + name);
-                //newPlayer.Location = new Location(1, 1);
-                //game.Players.Add(newPlayer);
-                //game.GameBoard.AddPlayer(newPlayer);
-
                 try
                 {
-                    Player newPlayer = null;
+                    Player thisPlayer = null;
                     string gameBoardString = "";
                     string message = "";
-                    while (!message.Equals("quit"))
+                    while (tcpclient.Connected)
                     {
                         NetworkStream n = tcpclient.GetStream();
-                        message = new BinaryReader(n).ReadString();
-                        var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
 
-                        Console.WriteLine(ap.Action, ap.UserName);
-
-                        if (newPlayer == null)
+                        if (tcpclient.Connected)
                         {
-                            newPlayer = CreateNewPlayer(ap);
+                            message = new BinaryReader(n).ReadString();
+                            var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
+
+                            Console.WriteLine(ap.Action, ap.UserName);
+
+                            if (thisPlayer == null)
+                            {
+                                thisPlayer = CreateNewPlayer(ap);
+                            }
+
+                            //fixa interactions
+                            game.HandlePlayerMovement(ap.Action, thisPlayer);
+                            gameBoardString = game.GameBoard.GetGameBoardString();
+                            string jsonToSend = game.GetProtocol(gameBoardString, thisPlayer);
+
+                            myServer.Broadcast(this, jsonToSend);
+
+                            Console.WriteLine(ap.Action);
                         }
-
-                        //fixa interactions
-                        game.HandlePlayerMovement(ap.Action, newPlayer);
-                        gameBoardString = game.GameBoard.GetGameBoardString();
-                        string jsonToSend = game.GetProtocol(gameBoardString, newPlayer);
-
-                        myServer.Broadcast(this, jsonToSend);
-
-                        Console.WriteLine(ap.Action);
                     }
 
+                    game.Players.Remove(thisPlayer);
                     myServer.DisconnectClient(this);
                     tcpclient.Close();
                 }
