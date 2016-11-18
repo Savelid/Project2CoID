@@ -8,6 +8,16 @@ namespace Projekt2CavernsOfImpendingDoom
 {
     public abstract class Item : BoardPiece
     {
-        public abstract void PickUp(Player player);
+        public static int counter = 0;
+        public Item()
+        {
+            counter++;
+        }
+
+        public virtual void PickUp(Player player)
+        {
+            counter--;
+            
+        }
     }
 }

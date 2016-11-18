@@ -10,12 +10,13 @@ namespace Projekt2CavernsOfImpendingDoom
     {
         public Sword() : base()
         {
-            Symbol = '\u2020';
+            Symbol = '!';//'\u2020';
             Name = "Sword";
         }
 
         public override void PickUp(Player player)
         {
+            base.PickUp(player);
             player.Strength += 5;
         }
     }

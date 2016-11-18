@@ -51,6 +51,22 @@ namespace Projekt2CavernsOfImpendingDoom
 
         }
 
+        internal void AddItemToRoom(Item item)
+        {
+            int x;
+            int y;
+
+            do
+            {
+                Random rand = new Random();
+                x = rand.Next(0, Width);
+                y = rand.Next(0, Height);
+            }
+            while (rooms[x, y].Items.Count > 0);
+
+            rooms[x, y].Items.Add(item);
+        }
+
         public string GetGameBoardString()
         {
             string roomString = "";
@@ -59,20 +75,21 @@ namespace Projekt2CavernsOfImpendingDoom
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    if (rooms[x, y].Characters.Count == 0)
+                    if (rooms[x, y].Characters.Count == 0 && rooms[x,y].Items.Count == 0)
                     {
                         roomString += "[ ]";
                     }
                     else if (rooms[x, y].Characters.Count == 1)
                     {
-                        Console.WriteLine("how many characters in room: " + rooms[x, y].Characters.Count);
 
-                        roomString += $"[{rooms[x,y].Characters[0].Name[0]}]";
+                        roomString += $"[{rooms[x, y].Characters[0].Name[0]}]";
+                    }
+                    else if (rooms[x,y].Items.Count == 1)
+                    {
+                        roomString += $"[{rooms[x, y].Items[0].Symbol}]";
                     }
                     else
                     {
-
-                        Console.WriteLine("how many characters in room: " + rooms[x, y].Characters.Count);
                         roomString += "[*]";
                     }
 

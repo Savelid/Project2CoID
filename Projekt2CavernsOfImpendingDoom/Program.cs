@@ -28,9 +28,51 @@ namespace Projekt2CavernsOfImpendingDoom
             Thread commandThread = new Thread(myServer.getCommand);
             commandThread.Start();
 
+            // item thread start
+            ItemHandler myItemHandler = new ItemHandler();
+            Thread itemThread = new Thread(myItemHandler.Run);
+            itemThread.Start();
+
             serverThread.Join();
             commandThread.Join();
         }
+
+        public class ItemHandler
+        {
+            public void Run()
+            {
+                //lägg ut items i intervall
+
+                Random rand = new Random();
+
+                while (true)
+                {
+                    Thread.Sleep(rand.Next(1000, 2000));
+
+
+                    if (Item.counter <= 10)
+                    {
+                        Item item = null;
+                        int choice = rand.Next(1, 3);
+                        switch (choice)
+                        {
+                            case 1:
+                                item = new Sword();
+                                break;
+                            case 2:
+                                item = new HealthPotion();
+                                break;
+                            default:
+                                break;
+                        }
+
+                        game.GameBoard.AddItemToRoom(item);
+                    }
+                }
+
+            }
+        }
+
 
         public class Server
         {

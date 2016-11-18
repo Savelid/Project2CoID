@@ -9,10 +9,13 @@ namespace Projekt2CavernsOfImpendingDoom
     {
         public Location Location { get; set; }
         public List<Character> Characters { get; set; }
+
+        public List<Item> Items { get; set; }
         public Room(Location location)
         {
             Location = location;
             Characters = new List<Character>();
+            Items = new List<Item>();
         }
 
         public void AddPlayer(Player player)
@@ -27,25 +30,7 @@ namespace Projekt2CavernsOfImpendingDoom
         {
             lock (Characters)
             {
-
-                //for(int i = 0; i<Characters.Count; i++)
-                //{
-                //    if (Characters[i].Name.Equals(player.Name))
-                //    {
-                //        Characters.RemoveAt(i);
-                //    }
-                //}
-
                 Characters.Remove(player);
-                Console.WriteLine("Number of characters in room after removing player: " + Characters.Count);
-
-                //foreach (Character character in Characters)
-                //{
-                //    if (character.Name.Equals(player.Name))
-                //    {
-                //        Characters.Remove(player);
-                //    } 
-                //}
             }
         }
     }

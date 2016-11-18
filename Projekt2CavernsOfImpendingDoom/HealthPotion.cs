@@ -10,12 +10,13 @@ namespace Projekt2CavernsOfImpendingDoom
     {
         public HealthPotion() : base()
         {
-            Symbol = '\u2764';
+            Symbol = '+'; /*'\u2764';*/
             Name = "Health Potion";
         }
 
         public override void PickUp(Player player)
         {
+            base.PickUp(player);
             player.Health += 10;
         }
     }
