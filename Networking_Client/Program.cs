@@ -41,7 +41,7 @@ namespace Networking_Client
                 Console.WriteLine("Ange Namn");
                 name = Console.ReadLine();
 
-                //localIP = Console.ReadLine();
+                localIP = Console.ReadLine();
                 #endregion
 
                 client = new TcpClient("192.168.220.116", 8080);
