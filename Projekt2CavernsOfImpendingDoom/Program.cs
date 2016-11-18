@@ -45,7 +45,8 @@ namespace Projekt2CavernsOfImpendingDoom
                 {
                     listener.Start();
 
-                    while (true)
+                    //förhindra listan av clients att bli för lång
+                    while (clients.Count < 5)
                     {
                         TcpClient c = listener.AcceptTcpClient();
                         ClientHandler newClient = new ClientHandler(c, this);
@@ -153,8 +154,7 @@ namespace Projekt2CavernsOfImpendingDoom
 
                 try
                 {
-                    
-                    string gameBoardString = "";
+                    //string gameBoardString = "";
                     string message = "";
                     while (tcpclient.Connected)
                     {
@@ -165,7 +165,7 @@ namespace Projekt2CavernsOfImpendingDoom
                             message = new BinaryReader(n).ReadString();
                             var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
 
-                            Console.WriteLine(ap.Action, ap.UserName);
+                            Console.WriteLine(ap.Action + ap.UserName);
 
                             if (thisPlayer == null)
                             {
@@ -184,7 +184,6 @@ namespace Projekt2CavernsOfImpendingDoom
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("inne i server catch");
                     Console.WriteLine(ex.Message);
                 }
                 finally
