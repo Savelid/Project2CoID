@@ -44,7 +44,7 @@ namespace Networking_Client
                 //localIP = Console.ReadLine();
                 #endregion
 
-                //client = new TcpClient("192.168.220.116", 8080);
+                client = new TcpClient("192.168.220.116", 8080);
                 client = new TcpClient(localIP, 5000);
 
                 Thread listenerThread = new Thread(Listen);
