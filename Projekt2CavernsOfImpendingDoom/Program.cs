@@ -19,7 +19,7 @@ namespace Projekt2CavernsOfImpendingDoom
         public static TcpListener listener;
         static void Main(string[] args)
         {
-            game = new Game(10,10);
+            game = new Game(10, 10);
 
             Server myServer = new Server();
             serverThread = new Thread(myServer.Run);
@@ -82,13 +82,14 @@ namespace Projekt2CavernsOfImpendingDoom
             {
                 listener = new TcpListener(IPAddress.Any, 5000);
                 Console.WriteLine("Server up and running, waiting for messages...");
+                bool isFull = false;
+                int maxPlayers = 4;
 
                 try
                 {
                     listener.Start();
 
-                    //förhindra listan av clients att bli för lång
-                    while (clients.Count < 5)
+                    do
                     {
                         TcpClient c = listener.AcceptTcpClient();
                         ClientHandler newClient = new ClientHandler(c, this);
@@ -96,7 +97,13 @@ namespace Projekt2CavernsOfImpendingDoom
 
                         Thread clientThread = new Thread(newClient.Run);
                         clientThread.Start();
-                    }
+
+                        if (clients.Count == maxPlayers)
+                        {
+                            isFull = true;
+                        }
+                    } while (!isFull);
+
                 }
                 catch (Exception ex)
                 {
@@ -207,8 +214,6 @@ namespace Projekt2CavernsOfImpendingDoom
                             if (tcpclient.Connected)
                             {
                                 var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
-
-                                Console.WriteLine(ap.Action + ap.UserName);
 
                                 if (thisPlayer == null)
                                 {

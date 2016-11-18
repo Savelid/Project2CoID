@@ -13,7 +13,7 @@ namespace Projekt2CavernsOfImpendingDoom
         public int Health
         {
             get { return health; }
-            set { health = health < 0 ? 0: value; }
+            set { health = value < 0 ? 0: value; }
         }
 
         private int strength;
