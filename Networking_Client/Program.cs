@@ -59,6 +59,7 @@ namespace Networking_Client
             public void Listen()
             {
                 string message = "";
+                Console.OutputEncoding = System.Text.Encoding.Unicode;
 
                 try
                 {

@@ -10,7 +10,7 @@ namespace Projekt2CavernsOfImpendingDoom
     {
         public HealthPotion() : base()
         {
-            Symbol = '+'; /*'\u2764';*/
+            Symbol = '\u2665'; /*'\u2764';*/
             Name = "Health Potion";
         }
 

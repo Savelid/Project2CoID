@@ -10,7 +10,7 @@ namespace Projekt2CavernsOfImpendingDoom
     {
         public Sword() : base()
         {
-            Symbol = '!';//'\u2020';
+            Symbol = '\u2666';//'\u2020';
             Name = "Sword";
         }
 
