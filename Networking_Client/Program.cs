@@ -65,22 +65,26 @@ namespace Networking_Client
                     {
                         NetworkStream n = client.GetStream();
                         message = new BinaryReader(n).ReadString();
-                        var toWrite = JsonConvert.DeserializeObject<GameBoardProtocol>(message);
-                        if (toWrite is GameBoardProtocol && toWrite.Version.Equals("1.0.0"))
+                        Console.WriteLine("is this empty???:" + message);
+                        if (message != null && !message.Equals(""))
                         {
-                            Console.Clear();
-                            Console.WriteLine(toWrite.Gameboard);
+                            var toWrite = JsonConvert.DeserializeObject<GameBoardProtocol>(message);
 
-                            foreach (var interaction in toWrite.Interactions)
+                            if (toWrite is GameBoardProtocol && toWrite.Version.Equals("1.0.0"))
                             {
-                                Console.WriteLine(interaction);
-                            }
-                            foreach (var stat in toWrite.Stats)
-                            {
-                                Console.WriteLine(stat);
+                                Console.Clear();
+                                Console.WriteLine(toWrite.Gameboard);
+
+                                foreach (var interaction in toWrite.Interactions)
+                                {
+                                    Console.WriteLine(interaction);
+                                }
+                                foreach (var stat in toWrite.Stats)
+                                {
+                                    Console.WriteLine(stat);
+                                }
                             }
                         }
-
                     }
                 }
                 catch (Exception ex)
