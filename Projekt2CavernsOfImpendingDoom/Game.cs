@@ -30,21 +30,26 @@ namespace Projekt2CavernsOfImpendingDoom
             switch (message)
             {
                 case "LeftArrow":
+                case "A":
                     player.Location.X--;
                     break;
                 case "RightArrow":
+                case "D":
                     if (player.Location.X < GameBoard.Width - 1)
                         player.Location.X++;
                     break;
                 case "UpArrow":
+                case "W":
                     player.Location.Y--;
                     break;
                 case "DownArrow":
+                case "S":
                     if (player.Location.Y < GameBoard.Height - 1)
                         player.Location.Y++;
                     break;
                 //varför funkar inte??
                 case "Spacebar":
+                case "Z":
                     //slå på en spelare
 
                     if (CheckRoomForOthers(player))
@@ -54,6 +59,7 @@ namespace Projekt2CavernsOfImpendingDoom
                     }
                     break;
                 case "P":
+                case "X":
                     if (GameBoard.rooms[player.Location.X, player.Location.Y].Items.Count > 0)
                     { 
                         GameBoard.rooms[player.Location.X, player.Location.Y].Items[0].PickUp(player);
