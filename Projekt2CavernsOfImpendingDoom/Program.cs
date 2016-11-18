@@ -79,7 +79,6 @@ namespace Projekt2CavernsOfImpendingDoom
                         w.Write(jsonToSend);
                         w.Flush();
                     }
-                    
                 }
             }
 
@@ -163,22 +162,25 @@ namespace Projekt2CavernsOfImpendingDoom
                         if (tcpclient.Connected)
                         {
                             message = new BinaryReader(n).ReadString();
-                            var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
-
-                            Console.WriteLine(ap.Action + ap.UserName);
-
-                            if (thisPlayer == null)
+                            if (tcpclient.Connected)
                             {
-                                thisPlayer = CreateNewPlayer(ap);
+                                var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
+
+                                Console.WriteLine(ap.Action + ap.UserName);
+
+                                if (thisPlayer == null)
+                                {
+                                    thisPlayer = CreateNewPlayer(ap);
+                                }
+
+                                //fixa interactions
+                                game.HandlePlayerMovement(ap.Action, thisPlayer);
+                                string jsonToSend = game.GetProtocol();
+
+                                myServer.Broadcast(this, jsonToSend);
+
+                                Console.WriteLine(ap.Action);
                             }
-
-                            //fixa interactions
-                            game.HandlePlayerMovement(ap.Action, thisPlayer);
-                            string jsonToSend = game.GetProtocol();
-
-                            myServer.Broadcast(this, jsonToSend);
-
-                            Console.WriteLine(ap.Action);
                         }
                     }
                 }

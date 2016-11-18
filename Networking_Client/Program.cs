@@ -66,6 +66,9 @@ namespace Networking_Client
                         NetworkStream n = client.GetStream();
                         message = new BinaryReader(n).ReadString();
                         var toWrite = JsonConvert.DeserializeObject<GameBoardProtocol>(message);
+                        Console.Clear();
+                        Console.WriteLine(toWrite.Gameboard);
+
                         foreach (var interaction in toWrite.Interactions)
                         {
                             Console.WriteLine(interaction);
@@ -87,7 +90,6 @@ namespace Networking_Client
             {
                 ConsoleKeyInfo message = new ConsoleKeyInfo();
                 try
-
                 {
                     NetworkStream n = client.GetStream();
 
