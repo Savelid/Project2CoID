@@ -46,9 +46,11 @@ namespace Projekt2CavernsOfImpendingDoom
                     //varför funkar inte??
                 case "Spacebar":
                     //slå på en spelare
+                    
                     if (CheckRoomForOthers(player))
                     {
                         HitPlayers(player);
+
                     }
                     break;
                 default:
@@ -63,7 +65,18 @@ namespace Projekt2CavernsOfImpendingDoom
             foreach (Character character in GameBoard.GetRoomCharacters(player) )
             {
                 if (character != player)
-                    character.Health -= player.Strength;
+                {
+                    if (!character.IsDead)
+                        character.Health -= player.Strength;
+
+                    //if (character.IsDead && character is Player)
+                    //{
+                    //    GameBoard.RemovePlayerFromRoom((Player)character);
+                    //    Players.Remove((Player)character);
+
+                    //}
+                }
+
             }
         }
 
@@ -85,7 +98,7 @@ namespace Projekt2CavernsOfImpendingDoom
         internal bool CheckRoomForOthers(Player player)
         {
             bool othersInRoom = false;
-            if (GameBoard.GetRoomCharacters(player).Count > 1)
+            if (GameBoard.GetRoomCharacters(player).Count > 0)
                 othersInRoom = true;
 
             return othersInRoom;

@@ -86,7 +86,6 @@ namespace Projekt2CavernsOfImpendingDoom
             {
                 clients.Remove(client);
                 Console.WriteLine("Client X has left the building...");
-                Broadcast(client, "Client X has left the building...");
             }
 
             internal void getCommand()
@@ -141,6 +140,7 @@ namespace Projekt2CavernsOfImpendingDoom
         {
             public TcpClient tcpclient;
             private Server myServer;
+
             public ClientHandler(TcpClient c, Server server)
             {
                 tcpclient = c;
@@ -175,6 +175,12 @@ namespace Projekt2CavernsOfImpendingDoom
 
                                 //fixa interactions
                                 game.HandlePlayerMovement(ap.Action, thisPlayer);
+
+                                //lever vi? om död,ta bort player från game och room + break
+                                if (thisPlayer.IsDead)
+                                {
+                                    break;
+                                }
                                 string jsonToSend = game.GetProtocol();
 
                                 myServer.Broadcast(this, jsonToSend);

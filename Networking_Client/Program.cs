@@ -65,7 +65,6 @@ namespace Networking_Client
                     {
                         NetworkStream n = client.GetStream();
                         message = new BinaryReader(n).ReadString();
-                        Console.WriteLine("is this empty???:" + message);
                         if (message != null && !message.Equals(""))
                         {
                             var toWrite = JsonConvert.DeserializeObject<GameBoardProtocol>(message);
