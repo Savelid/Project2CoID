@@ -16,18 +16,12 @@ namespace Projekt2CavernsOfImpendingDoom
         {
             Players = new List<Player>();
             GameBoard = new GameBoard(width, length);
-            //var player = new Player("Pär");
-            //player.Location = new Location(2, 2);
-            //Players.Add(player);
-            //GameBoard.AddPlayer(player);
-        
         }
 
+        //TODO: ta bort, redundant
         public string GetGameBoard()
         {
             string board = GameBoard.GetGameBoardString();
-
-
             return board;
         }
         public void HandlePlayerMovement(string message, Player player)
@@ -49,14 +43,15 @@ namespace Projekt2CavernsOfImpendingDoom
                     if (player.Location.Y < GameBoard.Height - 1)
                         player.Location.Y++;
                     break;
+                    //varför funkar inte??
                 case "Spacebar":
                     //slå på en spelare
+                    
                     if (CheckRoomForOthers(player))
                     {
                         HitPlayers(player);
+
                     }
-
-
                     break;
                 default:
                     Console.WriteLine("Key not allowed!");
@@ -69,7 +64,19 @@ namespace Projekt2CavernsOfImpendingDoom
         {
             foreach (Character character in GameBoard.GetRoomCharacters(player) )
             {
-                character.Health -= player.Strength;
+                if (character != player)
+                {
+                    if (!character.IsDead)
+                        character.Health -= player.Strength;
+
+                    //if (character.IsDead && character is Player)
+                    //{
+                    //    GameBoard.RemovePlayerFromRoom((Player)character);
+                    //    Players.Remove((Player)character);
+
+                    //}
+                }
+
             }
         }
 
@@ -91,7 +98,7 @@ namespace Projekt2CavernsOfImpendingDoom
         internal bool CheckRoomForOthers(Player player)
         {
             bool othersInRoom = false;
-            if (GameBoard.GetRoomCharacters(player).Count > 1)
+            if (GameBoard.GetRoomCharacters(player).Count > 0)
                 othersInRoom = true;
 
             return othersInRoom;

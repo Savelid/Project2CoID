@@ -45,7 +45,8 @@ namespace Projekt2CavernsOfImpendingDoom
                 {
                     listener.Start();
 
-                    while (true)
+                    //förhindra listan av clients att bli för lång
+                    while (clients.Count < 5)
                     {
                         TcpClient c = listener.AcceptTcpClient();
                         ClientHandler newClient = new ClientHandler(c, this);
@@ -78,7 +79,6 @@ namespace Projekt2CavernsOfImpendingDoom
                         w.Write(jsonToSend);
                         w.Flush();
                     }
-                    
                 }
             }
 
@@ -86,7 +86,6 @@ namespace Projekt2CavernsOfImpendingDoom
             {
                 clients.Remove(client);
                 Console.WriteLine("Client X has left the building...");
-                Broadcast(client, "Client X has left the building...");
             }
 
             internal void getCommand()
@@ -141,6 +140,7 @@ namespace Projekt2CavernsOfImpendingDoom
         {
             public TcpClient tcpclient;
             private Server myServer;
+
             public ClientHandler(TcpClient c, Server server)
             {
                 tcpclient = c;
@@ -153,8 +153,7 @@ namespace Projekt2CavernsOfImpendingDoom
 
                 try
                 {
-                    
-                    string gameBoardString = "";
+                    //string gameBoardString = "";
                     string message = "";
                     while (tcpclient.Connected)
                     {
@@ -163,28 +162,36 @@ namespace Projekt2CavernsOfImpendingDoom
                         if (tcpclient.Connected)
                         {
                             message = new BinaryReader(n).ReadString();
-                            var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
-
-                            Console.WriteLine(ap.Action, ap.UserName);
-
-                            if (thisPlayer == null)
+                            if (tcpclient.Connected)
                             {
-                                thisPlayer = CreateNewPlayer(ap);
+                                var ap = JsonConvert.DeserializeObject<ActionProtocol>(message);
+
+                                Console.WriteLine(ap.Action + ap.UserName);
+
+                                if (thisPlayer == null)
+                                {
+                                    thisPlayer = CreateNewPlayer(ap);
+                                }
+
+                                //fixa interactions
+                                game.HandlePlayerMovement(ap.Action, thisPlayer);
+
+                                //lever vi? om död,ta bort player från game och room + break
+                                if (thisPlayer.IsDead)
+                                {
+                                    break;
+                                }
+                                string jsonToSend = game.GetProtocol();
+
+                                myServer.Broadcast(this, jsonToSend);
+
+                                Console.WriteLine(ap.Action);
                             }
-
-                            //fixa interactions
-                            game.HandlePlayerMovement(ap.Action, thisPlayer);
-                            string jsonToSend = game.GetProtocol();
-
-                            myServer.Broadcast(this, jsonToSend);
-
-                            Console.WriteLine(ap.Action);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("inne i server catch");
                     Console.WriteLine(ex.Message);
                 }
                 finally

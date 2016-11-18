@@ -20,10 +20,10 @@ namespace NetworkingUtils
         public GameBoardProtocol(string gameboard)
         {
             Gameboard = gameboard;
-            Interactions = new List<string>();
             totalId++;
             Id = totalId;
             Version = "1.0.0";
+            Interactions = new List<string>();
             Stats = new List<string>();
         }
 
