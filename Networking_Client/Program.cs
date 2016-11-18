@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -40,7 +41,7 @@ namespace Networking_Client
                 Console.WriteLine("Ange Namn");
                 name = Console.ReadLine();
 
-                //localIP = Console.ReadLine();
+                localIP = Console.ReadLine();
                 #endregion
 
                 //client = new TcpClient("192.168.220.116", 8080);
@@ -104,6 +105,12 @@ namespace Networking_Client
                     while ((message.Key != ConsoleKey.Q) && (message.Key != ConsoleKey.Escape))
                     {
                         message = Console.ReadKey();
+                        if(message.Key.ToString().Equals("Spacebar") || message.Key.ToString().Equals("Z"))
+                        {
+                            SoundPlayer player = new SoundPlayer();
+                            player.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\sword-gesture1.wav";
+                            player.Play();
+                        }
                         BinaryWriter w = new BinaryWriter(n);
                         ActionProtocol ap = new ActionProtocol(name, message.Key.ToString());
                         string json = JsonConvert.SerializeObject(ap);
