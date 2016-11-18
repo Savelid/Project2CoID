@@ -16,8 +16,8 @@ namespace Projekt2CavernsOfImpendingDoom
             set { health = health < 0 ? 0: value; }
         }
 
-        public int Strength { get; set; }
-        private bool isDead;
+        private int strength;
+        public int Strength { get { return strength; } set { strength = value <= 50 ? value : 50; } }
 
         public bool IsDead
         {
